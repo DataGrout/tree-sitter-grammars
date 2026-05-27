@@ -1,5 +1,9 @@
 # tree-sitter-prolog
 
+[![crates.io](https://img.shields.io/crates/v/tree-sitter-prolog.svg)](https://crates.io/crates/tree-sitter-prolog)
+[![docs.rs](https://img.shields.io/docsrs/tree-sitter-prolog)](https://docs.rs/tree-sitter-prolog)
+[![license](https://img.shields.io/crates/l/tree-sitter-prolog.svg)](./LICENSE)
+
 An MIT-licensed [tree-sitter](https://tree-sitter.github.io/) grammar for
 **Prolog**, maintained by DataGrout.
 
@@ -10,8 +14,8 @@ atoms (`(<)`, `foo(=)`), and the usual directives. Dialect detection (ISO vs
 SWI-only, ProbLog, etc.) is left to downstream tooling — there is one grammar,
 not a SWI/Scryer fork.
 
-It parses **all 92** Prolog files under DataGrout's `priv` + battery trees with
-zero error nodes, including a 2673-line SWI module.
+It's battle-tested against thousands of lines of real-world SWI/ISO Prolog —
+including large multi-thousand-line modules — with zero parse errors.
 
 ## Why a new grammar?
 

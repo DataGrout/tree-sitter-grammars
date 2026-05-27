@@ -1,5 +1,7 @@
 # tree-sitter-grammars
 
+[![tree-sitter-prolog on crates.io](https://img.shields.io/crates/v/tree-sitter-prolog.svg?label=tree-sitter-prolog)](https://crates.io/crates/tree-sitter-prolog)
+
 MIT-licensed tree-sitter grammars maintained by [DataGrout](https://datagrout.ai), consumed by
 [invariant](https://github.com/DataGrout/invariant) (the multi-language semantic code analyzer).
 
