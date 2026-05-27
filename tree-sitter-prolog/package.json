@@ -1,0 +1,23 @@
+{
+  "name": "tree-sitter-prolog",
+  "version": "0.1.0",
+  "description": "MIT-licensed Prolog grammar for tree-sitter (ISO + SWI dicts + ProbLog + DCG superset)",
+  "license": "MIT",
+  "author": "DataGrout AI",
+  "main": "bindings/node",
+  "keywords": ["parser", "prolog", "tree-sitter", "iso", "scryer", "swi"],
+  "devDependencies": {
+    "tree-sitter-cli": "^0.26.0"
+  },
+  "scripts": {
+    "generate": "tree-sitter generate",
+    "test": "tree-sitter test"
+  },
+  "tree-sitter": [
+    {
+      "scope": "source.prolog",
+      "file-types": ["pl", "plt", "pro", "prolog", "P"],
+      "highlights": "queries/highlights.scm"
+    }
+  ]
+}

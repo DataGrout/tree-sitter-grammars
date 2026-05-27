@@ -1,0 +1,117 @@
+================================================================================
+Fact with arity
+================================================================================
+
+relation(entrance, connects_to, hall).
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (clause
+    term: (compound_term
+      functor: (atom (unquoted_atom))
+      argument: (atom (unquoted_atom))
+      argument: (atom (unquoted_atom))
+      argument: (atom (unquoted_atom)))))
+
+================================================================================
+Rule with conjunctive body
+================================================================================
+
+room_accessible(P, R) :- attribute(R, requires_key, K), relation(P, has_item, K).
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (clause
+    term: (binary_operation
+      left: (compound_term
+        functor: (atom (unquoted_atom))
+        argument: (variable)
+        argument: (variable))
+      right: (binary_operation
+        left: (compound_term
+          functor: (atom (unquoted_atom))
+          argument: (variable)
+          argument: (atom (unquoted_atom))
+          argument: (variable))
+        right: (compound_term
+          functor: (atom (unquoted_atom))
+          argument: (variable)
+          argument: (atom (unquoted_atom))
+          argument: (variable))))))
+
+================================================================================
+Module directive
+================================================================================
+
+:- module(dungeon, [room_connected/2]).
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (clause
+    term: (unary_operation
+      operand: (compound_term
+        functor: (atom (unquoted_atom))
+        argument: (atom (unquoted_atom))
+        argument: (list
+          element: (binary_operation
+            left: (atom (unquoted_atom))
+            right: (number)))))))
+
+================================================================================
+ProbLog annotated clause
+================================================================================
+
+0.5::heads :- toss.
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (clause
+    term: (binary_operation
+      left: (binary_operation
+        left: (number)
+        right: (atom (unquoted_atom)))
+      right: (atom (unquoted_atom)))))
+
+================================================================================
+SWI dict
+================================================================================
+
+report(R) :- R = _{ok: true}.
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (clause
+    term: (binary_operation
+      left: (compound_term
+        functor: (atom (unquoted_atom))
+        argument: (variable))
+      right: (binary_operation
+        left: (variable)
+        right: (dict
+          tag: (variable)
+          pair: (dict_pair
+            key: (atom (unquoted_atom))
+            value: (atom (unquoted_atom))))))))
+
+================================================================================
+DCG rule
+================================================================================
+
+greeting --> [hello], [world].
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (clause
+    term: (binary_operation
+      left: (atom (unquoted_atom))
+      right: (binary_operation
+        left: (list
+          element: (atom (unquoted_atom)))
+        right: (list
+          element: (atom (unquoted_atom)))))))

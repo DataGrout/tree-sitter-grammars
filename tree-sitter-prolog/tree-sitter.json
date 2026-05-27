@@ -1,0 +1,31 @@
+{
+  "grammars": [
+    {
+      "name": "prolog",
+      "camelcase": "Prolog",
+      "scope": "source.prolog",
+      "path": ".",
+      "file-types": ["pl", "plt", "pro", "prolog", "P"],
+      "highlights": ["queries/highlights.scm"],
+      "injection-regex": "^prolog$"
+    }
+  ],
+  "metadata": {
+    "version": "0.1.0",
+    "license": "MIT",
+    "description": "MIT-licensed Prolog grammar for tree-sitter (ISO + SWI dicts + ProbLog + DCG superset)",
+    "authors": [
+      {
+        "name": "DataGrout AI"
+      }
+    ]
+  },
+  "bindings": {
+    "c": true,
+    "go": false,
+    "node": true,
+    "python": false,
+    "rust": true,
+    "swift": false
+  }
+}

@@ -1,0 +1,219 @@
+================================================================================
+Fact arity zero
+================================================================================
+
+p.
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (clause
+    term: (atom
+      (unquoted_atom))))
+
+================================================================================
+List with tail
+================================================================================
+
+f([H|T]) :- g(H).
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (clause
+    term: (binary_operation
+      left: (compound_term
+        functor: (atom
+          (unquoted_atom))
+        argument: (list
+          element: (variable)
+          tail: (variable)))
+      right: (compound_term
+        functor: (atom
+          (unquoted_atom))
+        argument: (variable)))))
+
+================================================================================
+If-then-else body
+================================================================================
+
+ite(X) :- ( p(X) -> q(X) ; r(X) ).
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (clause
+    term: (binary_operation
+      left: (compound_term
+        functor: (atom
+          (unquoted_atom))
+        argument: (variable))
+      right: (parenthesized
+        (binary_operation
+          left: (binary_operation
+            left: (compound_term
+              functor: (atom
+                (unquoted_atom))
+              argument: (variable))
+            right: (compound_term
+              functor: (atom
+                (unquoted_atom))
+              argument: (variable)))
+          right: (compound_term
+            functor: (atom
+              (unquoted_atom))
+            argument: (variable)))))))
+
+================================================================================
+Negation as failure
+================================================================================
+
+neg(X) :- \+ member(X, L).
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (clause
+    term: (binary_operation
+      left: (compound_term
+        functor: (atom
+          (unquoted_atom))
+        argument: (variable))
+      right: (unary_operation
+        operand: (compound_term
+          functor: (atom
+            (unquoted_atom))
+          argument: (variable)
+          argument: (variable))))))
+
+================================================================================
+Arithmetic precedence
+================================================================================
+
+a(X) :- X is 1 + 2 * 3.
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (clause
+    term: (binary_operation
+      left: (compound_term
+        functor: (atom
+          (unquoted_atom))
+        argument: (variable))
+      right: (binary_operation
+        left: (variable)
+        right: (binary_operation
+          left: (number)
+          right: (binary_operation
+            left: (number)
+            right: (number)))))))
+
+================================================================================
+Cut in body
+================================================================================
+
+c(X) :- p(X), !, q(X).
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (clause
+    term: (binary_operation
+      left: (compound_term
+        functor: (atom
+          (unquoted_atom))
+        argument: (variable))
+      right: (binary_operation
+        left: (compound_term
+          functor: (atom
+            (unquoted_atom))
+          argument: (variable))
+        right: (binary_operation
+          left: (cut)
+          right: (compound_term
+            functor: (atom
+              (unquoted_atom))
+            argument: (variable)))))))
+
+================================================================================
+Operator as bare argument
+================================================================================
+
+allowed(=).
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (clause
+    term: (compound_term
+      functor: (atom
+        (unquoted_atom))
+      argument: (operator_atom))))
+
+================================================================================
+SWI dict field access
+================================================================================
+
+f(D, V) :- V = D.key.
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (clause
+    term: (binary_operation
+      left: (compound_term
+        functor: (atom
+          (unquoted_atom))
+        argument: (variable)
+        argument: (variable))
+      right: (binary_operation
+        left: (variable)
+        right: (dict_access
+          object: (variable)
+          access: (dict_access_key))))))
+
+================================================================================
+Module-qualified call
+================================================================================
+
+mq(X) :- lists:member(X, L).
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (clause
+    term: (binary_operation
+      left: (compound_term
+        functor: (atom
+          (unquoted_atom))
+        argument: (variable))
+      right: (binary_operation
+        left: (atom
+          (unquoted_atom))
+        right: (compound_term
+          functor: (atom
+            (unquoted_atom))
+          argument: (variable)
+          argument: (variable))))))
+
+================================================================================
+use_module directive
+================================================================================
+
+:- use_module(library(lists)).
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (clause
+    term: (unary_operation
+      operand: (compound_term
+        functor: (atom
+          (unquoted_atom))
+        argument: (compound_term
+          functor: (atom
+            (unquoted_atom))
+          argument: (atom
+            (unquoted_atom)))))))
+

@@ -1,0 +1,40 @@
+[package]
+name = "tree-sitter-prolog"
+description = "MIT-licensed Prolog grammar for tree-sitter (ISO + SWI dicts + ProbLog + DCG superset)"
+version = "0.1.0"
+authors = ["DataGrout AI"]
+license = "MIT"
+keywords = ["incremental", "parsing", "tree-sitter", "prolog"]
+categories = ["parsing", "text-editors"]
+repository = "https://github.com/datagrout/tree-sitter-grammars"
+edition = "2021"
+autoexamples = false
+readme = "README.md"
+
+build = "bindings/rust/build.rs"
+include = [
+    "bindings/rust/build.rs",
+    "bindings/rust/lib.rs",
+    "grammar.js",
+    "queries/highlights.scm",
+    "src/parser.c",
+    "src/grammar.json",
+    "src/node-types.json",
+    "src/tree_sitter/*.h",
+    "tree-sitter.json",
+    "LICENSE",
+    "README.md",
+    "CHANGELOG.md",
+]
+
+[lib]
+path = "bindings/rust/lib.rs"
+
+[dependencies]
+tree-sitter-language = "0.1"
+
+[build-dependencies]
+cc = "1.1"
+
+[dev-dependencies]
+tree-sitter = "0.24"
