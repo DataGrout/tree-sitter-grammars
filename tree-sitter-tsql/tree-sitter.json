@@ -1,0 +1,30 @@
+{
+  "grammars": [
+    {
+      "name": "tsql",
+      "camelcase": "TSql",
+      "scope": "source.sql.tsql",
+      "path": ".",
+      "file-types": ["sql"],
+      "injection-regex": "^(tsql|t-sql|mssql)$"
+    }
+  ],
+  "metadata": {
+    "version": "0.1.0",
+    "license": "MIT",
+    "description": "MIT-licensed T-SQL (SQL Server, Azure SQL) grammar for tree-sitter, built for extracting structure from real scripts",
+    "authors": [
+      {
+        "name": "DataGrout AI"
+      }
+    ]
+  },
+  "bindings": {
+    "c": true,
+    "go": false,
+    "node": true,
+    "python": false,
+    "rust": true,
+    "swift": false
+  }
+}

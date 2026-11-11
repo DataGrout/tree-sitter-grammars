@@ -1,6 +1,7 @@
 # tree-sitter-grammars
 
 [![tree-sitter-prolog on crates.io](https://img.shields.io/crates/v/tree-sitter-prolog.svg?label=tree-sitter-prolog)](https://crates.io/crates/tree-sitter-prolog)
+[![tree-sitter-tsql on crates.io](https://img.shields.io/crates/v/tree-sitter-tsql.svg?label=tree-sitter-tsql)](https://crates.io/crates/tree-sitter-tsql)
 
 MIT-licensed tree-sitter grammars maintained by [DataGrout](https://datagrout.ai), consumed by
 [invariant](https://github.com/DataGrout/invariant) (the multi-language semantic code analyzer).
@@ -18,15 +19,21 @@ permissively licensed grammar exists. It is deliberately small.
   grammar (Lua, Kotlin, Swift, …), it depends on that crate directly; we don't
   fork it here.
 
-In practice that leaves one grammar today: Prolog — because the most complete
-community grammar (`foxy/tree-sitter-prolog`) is **AGPL-3.0**, which can't ship
-inside a proprietary, network-served product. So we maintain an MIT one.
+In practice that leaves two grammars today:
+
+- **Prolog**, because the most complete community grammar
+  (`foxy/tree-sitter-prolog`) is **AGPL-3.0**, which can't ship inside a
+  proprietary, network-served product. So we maintain an MIT one.
+- **T-SQL**, because the permissive SQL grammars cannot read it: on SQL
+  Server's own open-source projects they leave 65–91% of the source under error
+  nodes.
 
 ## Grammars
 
 | Grammar | Status | License | Notes |
 |---------|--------|---------|-------|
 | [`tree-sitter-prolog`](./tree-sitter-prolog) | usable | MIT | Superset: ISO core + SWI dicts + ProbLog `::` + DCG. Parses all 92 `.pl` files under `data-grout` as well as all [logic-batteries](https://github.com/DataGrout/logic-batteries) with zero errors. Corpus + Rust test suites. |
+| [`tree-sitter-tsql`](./tree-sitter-tsql) | usable | MIT | SQL Server / Azure SQL, built for extracting structure: routines, tables, batches, control flow and data statements explicit, statement contents a permissive token stream. 97–100% of files clean on tSQLt, the First Responder Kit and Wide World Importers. Corpus tests. |
 
 ### Design principle (Prolog)
 
