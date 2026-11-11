@@ -1,0 +1,360 @@
+================================================================================
+Procedure with parameters, options and a block
+================================================================================
+
+CREATE OR ALTER PROCEDURE [Sales].[CloseOrder] @OrderID int, @Note AS nvarchar(100) = NULL OUTPUT
+WITH EXECUTE AS OWNER
+AS
+BEGIN
+    SET NOCOUNT ON;
+    UPDATE Sales.Orders SET ClosedWhen = SYSDATETIME() WHERE OrderID = @OrderID;
+END;
+GO
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (create_procedure
+    (object_name
+      (dotted_name))
+    (parameters
+      (parameter
+        (variable)
+        (object_name
+          (identifier)))
+      (parameter
+        (variable)
+        (object_name
+          (identifier))
+        (parenthesized
+          (number))
+        (operator)
+        (object_name
+          (identifier))
+        (object_name
+          (identifier))))
+    (object_name
+      (identifier))
+    (body
+      (block
+        (other_statement
+          (object_name
+            (identifier)))
+        (update_statement
+          (object_name
+            (dotted_name))
+          (object_name
+            (identifier))
+          (operator)
+          (object_name
+            (identifier))
+          (parenthesized)
+          (object_name
+            (identifier))
+          (object_name
+            (identifier))
+          (operator)
+          (variable)))))
+  (batch_separator))
+
+================================================================================
+Semicolons are optional; keywords end statements
+================================================================================
+
+SELECT a AS b, CAST(x AS int) FROM t WITH (NOLOCK)
+DECLARE @n int = 1
+SET @n = @n + 1
+PRINT @n
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (select_statement
+    (object_name
+      (identifier))
+    (object_name
+      (identifier))
+    (object_name
+      (identifier))
+    (parenthesized
+      (object_name
+        (identifier))
+      (object_name
+        (identifier)))
+    (object_name
+      (identifier))
+    (parenthesized
+      (object_name
+        (identifier))))
+  (declare_statement
+    (variable)
+    (object_name
+      (identifier))
+    (operator)
+    (number))
+  (other_statement
+    (variable)
+    (operator)
+    (variable)
+    (operator)
+    (number))
+  (other_statement
+    (variable)))
+
+================================================================================
+IF with and without a semicolon before ELSE
+================================================================================
+
+IF @x = 1 SELECT 1; ELSE SELECT 2;
+IF @y = 1 BEGIN SELECT 3 END
+ELSE IF @y = 2 SELECT 4
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (if_statement
+    (variable)
+    (operator)
+    (number)
+    (select_statement
+      (number))
+    (select_statement
+      (number)))
+  (if_statement
+    (variable)
+    (operator)
+    (number)
+    (block
+      (select_statement
+        (number)))
+    (if_statement
+      (variable)
+      (operator)
+      (number)
+      (select_statement
+        (number)))))
+
+================================================================================
+INSERT ... SELECT, MERGE and a CTE
+================================================================================
+
+INSERT INTO #log (id) SELECT o.OrderID FROM Sales.Orders AS o JOIN Sales.OrderLines ol ON ol.OrderID = o.OrderID;
+MERGE INTO dbo.T AS t USING dbo.S AS s ON t.Id = s.Id
+WHEN MATCHED THEN UPDATE SET t.V = s.V
+WHEN NOT MATCHED THEN INSERT (Id, V) VALUES (s.Id, s.V);
+;WITH c AS (SELECT 1 x) SELECT * FROM c;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (insert_statement
+    (temp_name)
+    (parenthesized
+      (object_name
+        (identifier)))
+    (select_statement
+      (object_name
+        (dotted_name))
+      (object_name
+        (dotted_name))
+      (object_name
+        (identifier))
+      (object_name
+        (identifier))
+      (object_name
+        (dotted_name))
+      (object_name
+        (identifier))
+      (object_name
+        (dotted_name))
+      (operator)
+      (object_name
+        (dotted_name))))
+  (merge_statement
+    (object_name
+      (dotted_name))
+    (object_name
+      (identifier))
+    (object_name
+      (identifier))
+    (object_name
+      (identifier))
+    (object_name
+      (dotted_name))
+    (object_name
+      (identifier))
+    (object_name
+      (identifier))
+    (object_name
+      (identifier))
+    (object_name
+      (dotted_name))
+    (operator)
+    (object_name
+      (dotted_name))
+    (object_name
+      (identifier))
+    (object_name
+      (dotted_name))
+    (operator)
+    (object_name
+      (dotted_name))
+    (object_name
+      (identifier))
+    (object_name
+      (identifier))
+    (parenthesized
+      (object_name
+        (identifier))
+      (object_name
+        (identifier)))
+    (parenthesized
+      (object_name
+        (dotted_name))
+      (object_name
+        (dotted_name))))
+  (with_statement
+    (common_table_expression
+      (identifier)
+      (parenthesized
+        (select_statement
+          (number)
+          (object_name
+            (identifier)))))
+    (select_statement
+      (object_name
+        (identifier)))))
+
+================================================================================
+TRY/CATCH, transactions and EXEC
+================================================================================
+
+BEGIN TRY
+    BEGIN TRAN;
+    EXEC @rc = dbo.DoWork @a = 1, @b = N'x';
+    COMMIT;
+END TRY
+BEGIN CATCH
+    ROLLBACK;
+    THROW;
+END CATCH
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (try_catch
+    (transaction_statement)
+    (exec_statement
+      (variable)
+      (object_name
+        (dotted_name))
+      (variable)
+      (operator)
+      (number)
+      (variable)
+      (operator)
+      (string))
+    (transaction_statement)
+    (transaction_statement)
+    (other_statement)))
+
+================================================================================
+Functions, views, triggers and tables
+================================================================================
+
+CREATE FUNCTION dbo.Lines(@id int) RETURNS TABLE AS RETURN SELECT * FROM Sales.OrderLines WHERE OrderID = @id;
+GO
+CREATE VIEW dbo.V AS SELECT 1 AS one;
+GO
+CREATE TRIGGER dbo.Tr ON dbo.T AFTER INSERT, UPDATE AS SET NOCOUNT ON;
+GO
+CREATE TABLE dbo.Audit (Id int PRIMARY KEY, Note nvarchar(max));
+DROP TABLE IF EXISTS #tmp;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (create_function
+    (object_name
+      (dotted_name))
+    (parameters
+      (parameter
+        (variable)
+        (object_name
+          (identifier))))
+    (return_statement
+      (select_statement
+        (object_name
+          (dotted_name))
+        (object_name
+          (identifier))
+        (object_name
+          (identifier))
+        (operator)
+        (variable))))
+  (batch_separator)
+  (create_view
+    (object_name
+      (dotted_name))
+    (body
+      (select_statement
+        (number)
+        (object_name
+          (identifier)))))
+  (batch_separator)
+  (create_trigger
+    (object_name
+      (dotted_name))
+    (object_name
+      (dotted_name))
+    (object_name
+      (identifier))
+    (object_name
+      (identifier))
+    (body
+      (other_statement
+        (object_name
+          (identifier)))))
+  (batch_separator)
+  (create_table
+    (object_name
+      (dotted_name))
+    (parenthesized
+      (object_name
+        (identifier))
+      (object_name
+        (identifier))
+      (object_name
+        (identifier))
+      (object_name
+        (identifier))
+      (object_name
+        (identifier))
+      (object_name
+        (identifier))
+      (parenthesized
+        (object_name
+          (identifier)))))
+  (drop_statement
+    (temp_name)))
+
+================================================================================
+Names that start with keywords are names
+================================================================================
+
+SELECT end_time, KillEndedTime, [End], name, type FROM sys.objects;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (select_statement
+    (object_name
+      (identifier))
+    (object_name
+      (identifier))
+    (object_name
+      (bracketed_identifier))
+    (object_name
+      (identifier))
+    (object_name
+      (dotted_name))))

@@ -1,0 +1,22 @@
+{
+  "name": "tree-sitter-tsql",
+  "version": "0.1.0",
+  "description": "MIT-licensed T-SQL (SQL Server, Azure SQL) grammar for tree-sitter, built for extracting structure from real scripts",
+  "license": "MIT",
+  "author": "DataGrout AI",
+  "main": "bindings/node",
+  "keywords": ["parser", "tsql", "t-sql", "sql", "sqlserver", "tree-sitter"],
+  "devDependencies": {
+    "tree-sitter-cli": "^0.26.0"
+  },
+  "scripts": {
+    "generate": "tree-sitter generate",
+    "test": "tree-sitter test"
+  },
+  "tree-sitter": [
+    {
+      "scope": "source.sql.tsql",
+      "file-types": ["sql"]
+    }
+  ]
+}
