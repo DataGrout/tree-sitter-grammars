@@ -1,0 +1,49 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+env:
+  CARGO_TERM_COLOR: always
+  # The CLI that generated the committed parsers; a newer one emits a newer ABI.
+  TREE_SITTER_CLI: 0.26.9
+
+jobs:
+  grammar:
+    name: ${{ matrix.grammar }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        grammar: [tree-sitter-prolog, tree-sitter-tsql]
+    defaults:
+      run:
+        working-directory: ${{ matrix.grammar }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: ${{ matrix.grammar }}
+          cache-bin: true
+      - name: Install the tree-sitter CLI
+        run: cargo install tree-sitter-cli --version "$TREE_SITTER_CLI" --locked
+      - name: Corpus tests
+        run: tree-sitter test
+      - name: Rust bindings
+        run: cargo test
+      - name: Generated parser matches grammar.js
+        # tree-sitter-prolog's parser predates this CLI; regenerating it would
+        # move it to ABI 15 and break users on tree-sitter 0.24.
+        if: matrix.grammar == 'tree-sitter-tsql'
+        run: |
+          tree-sitter generate
+          git diff --exit-code -- src/
+      - name: Package
+        run: cargo package
